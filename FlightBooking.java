@@ -2,12 +2,9 @@ package com.airline.booking.model;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import jakarta.persistence.UniqueConstraint;
 
@@ -23,52 +20,39 @@ public class FlightBooking {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Integer id;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "customer_id", nullable = false)
-    private Customer customer;
+    @Column(name = "customer_id", nullable = false)
+    private Integer customerId;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "flight_id", nullable = false)
-    private Flight flight;
-
-    @Column(name = "confirmed", nullable = false)
-    private Boolean confirmed = true;
+    @Column(name = "flight_id", nullable = false)
+    private Integer flightId;
 
     protected FlightBooking() {
     }
 
-    public FlightBooking(Customer customer, Flight flight) {
-        this.customer = customer;
-        this.flight = flight;
+    public FlightBooking(Integer customerId, Integer flightId) {
+        this.customerId = customerId;
+        this.flightId = flightId;
     }
 
-    public Long getId() {
+    public Integer getId() {
         return id;
     }
 
-    public Customer getCustomer() {
-        return customer;
+    public Integer getCustomerId() {
+        return customerId;
     }
 
-    public void setCustomer(Customer customer) {
-        this.customer = customer;
+    public void setCustomerId(Integer customerId) {
+        this.customerId = customerId;
     }
 
-    public Flight getFlight() {
-        return flight;
+    public Integer getFlightId() {
+        return flightId;
     }
 
-    public void setFlight(Flight flight) {
-        this.flight = flight;
-    }
-
-    public Boolean getConfirmed() {
-        return confirmed;
-    }
-
-    public void setConfirmed(Boolean confirmed) {
-        this.confirmed = confirmed;
+    public void setFlightId(Integer flightId) {
+        this.flightId = flightId;
     }
 }

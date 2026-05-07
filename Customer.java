@@ -1,6 +1,5 @@
 package com.airline.booking.model;
 
-import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -8,11 +7,7 @@ import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
-
-import java.util.ArrayList;
-import java.util.List;
 
 @Entity
 @Table(name = "customers")
@@ -20,69 +15,52 @@ public class Customer {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Integer id;
 
-    @Column(name = "customer_name", nullable = false)
-    private String customerName;
+    @Column(nullable = false)
+    private String name;
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "customer_status", nullable = false)
-    private CustomerStatus customerStatus = CustomerStatus.NONE;
+    @Column(nullable = false)
+    private CustomerStatus status = CustomerStatus.NONE;
 
-    @Column(name = "total_customer_mileage", nullable = false)
-    private Integer totalCustomerMileage = 0;
-
-    @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<FlightBooking> flightBookings = new ArrayList<>();
+    @Column(name = "total_miles_flown", nullable = false)
+    private Integer totalMilesFlown = 0;
 
     protected Customer() {
     }
 
-    public Customer(String customerName, CustomerStatus customerStatus, Integer totalCustomerMileage) {
-        this.customerName = customerName;
-        this.customerStatus = customerStatus;
-        this.totalCustomerMileage = totalCustomerMileage;
+    public Customer(String name, CustomerStatus status, Integer totalMilesFlown) {
+        this.name = name;
+        this.status = status;
+        this.totalMilesFlown = totalMilesFlown;
     }
 
-    public Long getId() {
+    public Integer getId() {
         return id;
     }
 
-    public String getCustomerName() {
-        return customerName;
+    public String getName() {
+        return name;
     }
 
-    public void setCustomerName(String customerName) {
-        this.customerName = customerName;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public CustomerStatus getCustomerStatus() {
-        return customerStatus;
+    public CustomerStatus getStatus() {
+        return status;
     }
 
-    public void setCustomerStatus(CustomerStatus customerStatus) {
-        this.customerStatus = customerStatus;
+    public void setStatus(CustomerStatus status) {
+        this.status = status;
     }
 
-    public Integer getTotalCustomerMileage() {
-        return totalCustomerMileage;
+    public Integer getTotalMilesFlown() {
+        return totalMilesFlown;
     }
 
-    public void setTotalCustomerMileage(Integer totalCustomerMileage) {
-        this.totalCustomerMileage = totalCustomerMileage;
-    }
-
-    public List<FlightBooking> getFlightBookings() {
-        return flightBookings;
-    }
-
-    public void addFlightBooking(FlightBooking flightBooking) {
-        flightBookings.add(flightBooking);
-        flightBooking.setCustomer(this);
-    }
-
-    public void removeFlightBooking(FlightBooking flightBooking) {
-        flightBookings.remove(flightBooking);
-        flightBooking.setCustomer(null);
+    public void setTotalMilesFlown(Integer totalMilesFlown) {
+        this.totalMilesFlown = totalMilesFlown;
     }
 }

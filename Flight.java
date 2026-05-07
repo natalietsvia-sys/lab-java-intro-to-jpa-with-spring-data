@@ -1,16 +1,11 @@
 package com.airline.booking.model;
 
-import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
-
-import java.util.ArrayList;
-import java.util.List;
 
 @Entity
 @Table(name = "flights")
@@ -18,7 +13,7 @@ public class Flight {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Integer id;
 
     @Column(name = "flight_number", nullable = false, unique = true)
     private String flightNumber;
@@ -29,23 +24,20 @@ public class Flight {
     @Column(name = "total_aircraft_seats", nullable = false)
     private Integer totalAircraftSeats;
 
-    @Column(name = "flight_mileage", nullable = false)
-    private Integer flightMileage;
-
-    @OneToMany(mappedBy = "flight", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<FlightBooking> flightBookings = new ArrayList<>();
+    @Column(nullable = false)
+    private Integer mileage;
 
     protected Flight() {
     }
 
-    public Flight(String flightNumber, String aircraft, Integer totalAircraftSeats, Integer flightMileage) {
+    public Flight(String flightNumber, String aircraft, Integer totalAircraftSeats, Integer mileage) {
         this.flightNumber = flightNumber;
         this.aircraft = aircraft;
         this.totalAircraftSeats = totalAircraftSeats;
-        this.flightMileage = flightMileage;
+        this.mileage = mileage;
     }
 
-    public Long getId() {
+    public Integer getId() {
         return id;
     }
 
@@ -73,25 +65,11 @@ public class Flight {
         this.totalAircraftSeats = totalAircraftSeats;
     }
 
-    public Integer getFlightMileage() {
-        return flightMileage;
+    public Integer getMileage() {
+        return mileage;
     }
 
-    public void setFlightMileage(Integer flightMileage) {
-        this.flightMileage = flightMileage;
-    }
-
-    public List<FlightBooking> getFlightBookings() {
-        return flightBookings;
-    }
-
-    public void addFlightBooking(FlightBooking flightBooking) {
-        flightBookings.add(flightBooking);
-        flightBooking.setFlight(this);
-    }
-
-    public void removeFlightBooking(FlightBooking flightBooking) {
-        flightBookings.remove(flightBooking);
-        flightBooking.setFlight(null);
+    public void setMileage(Integer mileage) {
+        this.mileage = mileage;
     }
 }
